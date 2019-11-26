@@ -35,7 +35,7 @@ public class testDisqueria {
 		miDisqueria.agregarDisco(c);
 		miDisqueria.agregarDisco(d);
 		try {
-			miDisqueria.eliminarDisco("005");
+			miDisqueria.eliminarDisco(b.getCodigo());
 		} catch (DiscoInexistenteException e) {
 			e.printStackTrace();
 		}
@@ -67,24 +67,42 @@ public class testDisqueria {
 		}
 	}
 	
-	@Test
-	public void testQueEliminaUnaVentaInexistente() {
-		
+	@Test (expected = VentaInexistenteException.class)
+	public void testQueEliminaUnaVentaInexistente() throws VentaInexistenteException {
+		miDisqueria.agregarVenta(v);
+		miDisqueria.agregarVenta(v1);
+		miDisqueria.agregarVenta(v2);
+		miDisqueria.eliminarVenta(111);
 	}
 	
-	@Test
-	public void testQueEliminaUnDiscoInexistente() {
-		
+	@Test (expected = DiscoInexistenteException.class)
+	public void testQueEliminaUnDiscoInexistente() throws DiscoInexistenteException {
+		miDisqueria.agregarDisco(a);
+		miDisqueria.agregarDisco(b);
+		miDisqueria.agregarDisco(c);
+		miDisqueria.agregarDisco(d);
+		miDisqueria.eliminarDisco("000");
 	}
 	
-	@Test
-	public void testQueModificaMalUnPrecio() {
+	@Test (expected = PrecioInsuficienteException.class)
+	public void testQueModificaMalUnPrecio() throws CdInexistenteException, PrecioInsuficienteException {
 		Double precioNuevo=-230.0;
+		miDisqueria.agregarVenta(v);
+		miDisqueria.agregarVenta(v1);
+		miDisqueria.agregarVenta(v2);
+		miDisqueria.modificarPrecioDeUnCd(v.getDisco().getCodigo(), precioNuevo);
 	}
 	
 	@Test
 	public void testQueModificaPrecio() {
-		
+		try {
+			Double precioNuevo= 3000.0;
+			miDisqueria.agregarVenta(v);
+			miDisqueria.agregarVenta(v1);
+			Boolean valorEsperado = miDisqueria.modificarPrecioDeUnCd(v.getDisco().getCodigo(), precioNuevo);
+			Assert.assertTrue(valorEsperado);
+		} catch (CdInexistenteException | PrecioInsuficienteException e) {
+			e.printStackTrace();
+		}
 	}
-
 }

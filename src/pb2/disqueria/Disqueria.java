@@ -17,43 +17,30 @@ public class Disqueria {
 		this.listaDeDiscos = new ArrayList<Disco>();
 		this.listaDeVentas = new TreeSet<Ventas>();
 	}
-	
 
 	public String getNombre() {
 		return nombre;
 	}
 
-
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-
 
 	public List<Disco> getListaDeDiscos() {
 		return listaDeDiscos;
 	}
 
-
-
 	public void setListaDeDiscos(List<Disco> listaDeDiscos) {
 		this.listaDeDiscos = listaDeDiscos;
 	}
-
-
 
 	public Set<Ventas> getListaDeVentas() {
 		return listaDeVentas;
 	}
 
-
-
 	public void setListaDeVentas(Set<Ventas> listaDeVentas) {
 		this.listaDeVentas = listaDeVentas;
 	}
-
-
 
 	public void agregarDisco(Disco nuevo) { // sin excepciones. No retorna nada
 		this.listaDeDiscos.add(nuevo);
@@ -67,9 +54,8 @@ public class Disqueria {
 				disc.remove();
 				return true;
 			}
-			throw new DiscoInexistenteException();
 		}
-		return false;
+		throw new DiscoInexistenteException();
 	}
 
 	public void agregarVenta(Ventas venta) {
@@ -84,9 +70,8 @@ public class Disqueria {
 				vent.remove();
 				return true;
 			}
-			throw new VentaInexistenteException();
 		}
-		return false;
+		throw new VentaInexistenteException();
 	}
 
 	public Set<Cds> listaDeCdsOrdenadosPorAnioDePublicacion() { // no es void
@@ -103,8 +88,8 @@ public class Disqueria {
 	public Integer cantidadDeVinilosVendidosDeColorNegro() { // no es void
 		Integer total = 0;
 		for (Ventas v : this.listaDeVentas) {
-			if(v.getDisco() instanceof Vinilo) {
-				if(((Vinilo)v.getDisco()).getColor() == "Negro") {
+			if (v.getDisco() instanceof Vinilo) {
+				if (((Vinilo) v.getDisco()).getColor() == "Negro") {
 					total++;
 				}
 				return 0;
@@ -116,7 +101,7 @@ public class Disqueria {
 	public Integer ventaTotalDeCdsSimples() { // no es void
 		Integer total = 0;
 		for (Ventas v : this.listaDeVentas) {
-			if (((Cds)v.getDisco()).getCantidadDeCds() == 1) {
+			if (((Cds) v.getDisco()).getCantidadDeCds() == 1) {
 				total++;
 			}
 			return 0;
@@ -125,19 +110,19 @@ public class Disqueria {
 	}
 
 	public Boolean modificarPrecioDeUnCd(String codigo, Double precio)
-			throws CdInexistenteException, ModificacionErronea {
-		for (Disco d : this.listaDeDiscos) {
-			if (d instanceof Cds) {
-				if (d.getCodigo().equals(codigo)) {
-					d.setPrecio(precio);
-					return true;
+			throws CdInexistenteException, PrecioInsuficienteException {
+		if (precio > 0) {
+			for (Disco d : this.listaDeDiscos) {
+				if (d instanceof Cds) {
+					if (d.getCodigo().equals(codigo)) {
+						d.setPrecio(precio);
+						return true;
+					}
+					throw new CdInexistenteException();
 				}
-				throw new CdInexistenteException();
 			}
-			throw new ModificacionErronea();
-
 		}
-		return false;
+		throw new PrecioInsuficienteException();
 	}
 
 }
