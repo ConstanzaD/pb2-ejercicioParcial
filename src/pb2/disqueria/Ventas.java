@@ -8,21 +8,13 @@ public class Ventas implements Comparable<Ventas> {
 	private Integer idVenta;
 	private Integer cantidad;
 	private Double total;
-	private Cds cd;
-	private Vinilo vinilo;
+	private Disco disco;
 
-	public Ventas(Integer idVenta, Integer cantidad, Double total, Cds cd) {
+	public Ventas(Integer idVenta, Integer cantidad, Disco disco) {
 		this.idVenta = idVenta;
 		this.cantidad = cantidad;
 		this.total = total;
-		this.cd = cd;
-	}
-
-	public Ventas(Integer idVenta, Integer cantidad, Double total, Vinilo vinilo) {
-		this.idVenta = idVenta;
-		this.cantidad = cantidad;
-		this.total = total;
-		this.vinilo = vinilo;
+		this.disco = disco;
 	}
 
 	public Integer getIdVenta() {
@@ -48,29 +40,24 @@ public class Ventas implements Comparable<Ventas> {
 	public void setTotal(Double total) {
 		this.total = total;
 	}
+	
 
-	public Cds getCd() {
-		return cd;
+	public Disco getDisco() {
+		return disco;
 	}
 
-	public void setCd(Cds cd) {
-		this.cd = cd;
+
+	public void setDisco(Disco disco) {
+		this.disco = disco;
 	}
 
-	public Vinilo getVinilo() {
-		return vinilo;
-	}
-
-	public void setVinilo(Vinilo vinilo) {
-		this.vinilo = vinilo;
-	}
 
 	@Override
-	public int compareTo(Ventas e) {
-		if(e.getIdVenta()> idVenta) {
+	public int compareTo(Ventas o) {
+		if(o.getIdVenta()> idVenta) {
 			return 1;
 		}
-		else if(e.getIdVenta()< idVenta) {
+		else if(o.getIdVenta()< idVenta) {
 			return -1;
 		}
 		return 0;
